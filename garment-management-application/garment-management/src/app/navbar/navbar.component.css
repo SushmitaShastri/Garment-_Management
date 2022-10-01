@@ -1,0 +1,12 @@
+.nav-link
+{
+    color:cornsilk !important;
+}
+.nav-link:hover
+{
+    color: #05312b !important;
+}
+.navbar
+{
+    box-shadow: 5px 2px 8px grey;
+}
