@@ -22,7 +22,7 @@
 DROP TABLE IF EXISTS `admin`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `user` (
+CREATE TABLE `admin` (
   `id` int(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(20) DEFAULT NULL,
   `username` varchar(20) DEFAULT NULL,
@@ -36,9 +36,8 @@ CREATE TABLE `user` (
 -- Dumping data for table `admin`
 --
 
-LOCK TABLES `user` WRITE;
+LOCK TABLES `admin` WRITE;
 /*!40000 ALTER TABLE `admin` DISABLE KEYS */;
-INSERT INTO `admin` VALUES ('vishwanath','sg','12345',9876543210);
 /*!40000 ALTER TABLE `admin` ENABLE KEYS */;
 UNLOCK TABLES;
 
