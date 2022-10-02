@@ -194,6 +194,26 @@ app.post("/addVendor",function(req,res)
 
 });
 
+
+app.post("/addOrder",function(req,res)
+{
+    let pid = req.body.pname;
+    let vid = req.body.vname;
+    let date = req.body.date;
+    let quantity = req.body.qty;
+    let damage = req.body.damage;
+    let cid = req.body.cname;
+    dbConn.query(`INSERT INTO order_request(pid, vid, date, quantity, damage, cid) VALUES ('${pid}','${vid}','${date}','${quantity}','${damage}','${cid}'))`,function(error,results)
+    {
+        if(error)
+        {
+            return res.send({error:true,data:results,message:error});
+        }
+        return res.send({error:false,data:results,message:"success"});
+    });
+
+});
+
 app.post("/addProduct",function(req,res)
 {
     let name = req.body.name;
