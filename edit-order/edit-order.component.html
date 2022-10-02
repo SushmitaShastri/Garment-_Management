@@ -1,0 +1,51 @@
+<app-navbar></app-navbar><br>
+<div>
+    <div class="container col-sm-6 m-auto">
+        <h3>Edit order</h3><hr>
+        <form [formGroup]="editOrderGroup" (submit)="updateOrder()">
+            <label>Product-Name:</label><br>
+              <div class="input-group">
+                 <input formControlName="pname" required [class.is-invalid]="f['pname'].invalid && (f['pname'].dirty || f['pname'].touched)" class="form-control" readonly placeholder="enter pname" type="text" class="form-control" id="name" aria-describedby="usernameHelp">
+                </div>
+              <div *ngIf="f['pname'].invalid && f['pname'].touched">
+                <small class="text-danger" *ngIf="f['pname'].errors?.['required']">Please enter the name!</small>
+              </div><br>
+              <label>Vendor-Name:</label><br>
+              <div class="input-group">
+                <input formControlName="vname" required [class.is-invalid]="f['vname'].invalid && (f['vname'].dirty || f['vname'].touched)" class="form-control" readonly placeholder="enter vname" type="text" class="form-control" id="name" aria-describedby="usernameHelp">
+              </div>
+              <div *ngIf="f['vname'].invalid && f['vname'].touched">
+                <small class="text-danger" *ngIf="f['vname'].errors?.['required']">Please enter the name!</small>
+              </div><br>
+              <label>Date:</label><br>
+              <div class="input-group">
+                <input formControlName="date" required [class.is-invalid]="f['date'].invalid && (f['date'].dirty || f['date'].touched)" class="form-control" placeholder="enter date" type="date" class="form-control" id="name" aria-describedby="usernameHelp">
+              </div>
+              <div *ngIf="f['date'].invalid && f['date'].touched">
+                <small class="text-danger" *ngIf="f['date'].errors?.['required']">Please date!</small>
+              </div><br>
+              <label>Quantity:</label><br>
+              <div class="input-group">
+                <input formControlName="qty" required [class.is-invalid]="f['qty'].invalid && (f['qty'].dirty || f['qty'].touched)" class="form-control" placeholder="enter Quantity" type="number" class="form-control" id="name" aria-describedby="usernameHelp">
+              </div>
+              <div *ngIf="f['qty'].invalid && f['qty'].touched">
+                <small class="text-danger" *ngIf="f['qty'].errors?.['required']">Please date!</small>
+              </div><br>
+              <label>Damage:</label><br>
+              <div class="input-group">
+                <input formControlName="damage" required [class.is-invalid]="f['damage'].invalid && (f['damage'].dirty || f['damage'].touched)" class="form-control" placeholder="enter damage value" type="number" class="form-control" id="name" aria-describedby="usernameHelp">
+              </div>
+              <div *ngIf="f['damage'].invalid && f['damage'].touched">
+                <small class="text-danger" *ngIf="f['damage'].errors?.['required']">Please enter the damage value!</small>
+              </div><br>
+              <label>Catalog:</label><br>
+              <div class="input-group">
+                <input formControlName="cname" required [class.is-invalid]="f['cname'].invalid && (f['cname'].dirty || f['cname'].touched)" class="form-control" readonly placeholder="enter cname" type="text" class="form-control" id="name" aria-describedby="usernameHelp">
+              </div>
+              <div *ngIf="f['cname'].invalid && f['cname'].touched">
+                <small class="text-danger" *ngIf="f['cname'].errors?.['required']">Please enter the catalog name!</small>
+              </div><br>
+              <input type="submit" class="btn btn-info" value="Submit"  (click)="updateOrder">
+        </form>
+    </div>
+</div>

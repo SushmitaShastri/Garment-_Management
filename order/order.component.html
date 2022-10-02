@@ -1,0 +1,30 @@
+
+<app-navbar></app-navbar><br><br>
+<div class="container"><br>
+    <div *ngIf="errorTrue" class="alert alert-danger">{{errorMsg}}</div>
+    <div style="float:right"><button routerLink="/addOrder" class="btn btn-primary"><i class="uil uil-plus"></i>Add order</button></div><br>
+    <br>
+    <table class="table table-striped">
+        <thead>
+            <th>product-Name</th>
+            <th>vendor-name</th>
+            <th>Date</th>
+            <th>Quantity</th>
+            <th>Damage</th>
+            <th>catalog</th>
+            <th>Update</th>
+            <th>Delete</th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let od of orderData">
+            <td>{{od.pname}}</td>
+            <td>{{od.vname}}</td>
+            <td>{{od.date}}</td>
+            <td>{{od.quantity}}</td>
+            <td>{{od.damage}}</td>
+            <td>{{od.cname}}</td>
+            <td><a><i class="uil uil-pen" (click)="editOrder(od)"></i></a></td>
+            <td><a><i class="uil uil-trash" (click)="deleteOrder(od.oid)"></i></a></td></tr>
+        </tbody>
+    </table>
+</div>
