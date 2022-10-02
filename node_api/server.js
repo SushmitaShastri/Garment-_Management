@@ -72,6 +72,50 @@ app.get("/vendorList",function(req,res)
         });
 });
 
+app.get("/orderList",function(req,res)
+{
+    dbConn.query(`select o.date,o.quantity,o.damage,p.name as pname,v.name vname,c.name as cname
+    from order_request o,catalog c,product p,vendor v
+    where o.pid=p.pid and o.vid=v.vid and c.id=o.cid`, function (error, results, fields)
+        {
+            //console.log(results);
+            return res.send({error:false,data:results,message:"success"});
+        });
+});
+
+app.get("/getcid",function(req,res)
+{
+    dbConn.query(`select id as cid,name from catalog`,function(req,res)
+    {
+        return res.send({error:false,data:results,message:"success"});
+    });
+});
+
+app.get("/getpid",function(req,res)
+{
+    dbConn.query(`select pid,name as pname from product`,function(req,res)
+    {
+        return res.send({error:false,data:results,message:"success"});
+    });
+});
+
+app.get("/getvid",function(req,res)
+{
+    dbConn.query(`select vid,name as vname from vendor`,function(req,res)
+    {
+        return res.send({error:false,data:results,message:"success"});
+    });
+});
+
+app.get("/productList",function(req,res)
+{
+    dbConn.query(`select * from product`, function (error, results, fields)
+        {
+            //console.log(results);
+            return res.send({error:false,data:results,message:"success"});
+        });
+});
+
 app.post("/editVendor",function(req,res)
 {
     //console.log(req);
@@ -80,6 +124,23 @@ app.post("/editVendor",function(req,res)
     let phone = req.body.phone;
     let address = req.body.address;
     dbConn.query(`update vendor set name='${name}',phone='${phone}',address='${address}' where vid='${vid}';`, function (error, results, fields)
+        {
+            if(error)
+            {
+                return res.send({error:true,data:results,message:error});
+            }
+            return res.send({error:false,data:results,message:"success"});
+        });
+});
+
+app.post("/editProduct",function(req,res)
+{
+    //console.log(req);
+    let pid = req.body.pid;
+    let name = req.body.name;
+    let description = req.body.description;
+    let size = req.body.size;
+    dbConn.query(`update product set name='${name}',description='${description}',size='${size}' where pid=${pid}`, function (error, results, fields)
         {
             if(error)
             {
@@ -103,12 +164,42 @@ app.post("/deleteVendor",function(req,res)
     });
 });
 
+app.post("/deleteProduct",function(req,res)
+{
+    let pid = req.body.pid;
+    //console.log(vid);
+    dbConn.query(`delete from product where pid="${pid}"`,function(error,results)
+    {
+        if(error)
+        {
+            return res.send({error:true,data:results,message:error});
+        }
+        return res.send({error:false,data:results,message:"success"});
+    });
+});
+
 app.post("/addVendor",function(req,res)
 {
     let name = req.body.name;
     let phone = req.body.phone;
     let address = req.body.address;
     dbConn.query(`insert into vendor (admin_id,name,phone,address) values(0,'${name}','${phone}','${address}')`,function(error,results)
+    {
+        if(error)
+        {
+            return res.send({error:true,data:results,message:error});
+        }
+        return res.send({error:false,data:results,message:"success"});
+    });
+
+});
+
+app.post("/addProduct",function(req,res)
+{
+    let name = req.body.name;
+    let description = req.body.description;
+    let size = req.body.size;
+    dbConn.query(`insert into product (name,description,size) values('${name}','${description}','${size}')`,function(error,results)
     {
         if(error)
         {
