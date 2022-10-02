@@ -85,7 +85,7 @@ app.get("/orderList",function(req,res)
 
 app.get("/getcid",function(req,res)
 {
-    dbConn.query(`select id as cid,name from catalog`,function(req,res)
+    dbConn.query(`select id as cid,name from catalog`,function(error,results)
     {
         return res.send({error:false,data:results,message:"success"});
     });
@@ -93,7 +93,7 @@ app.get("/getcid",function(req,res)
 
 app.get("/getpid",function(req,res)
 {
-    dbConn.query(`select pid,name as pname from product`,function(req,res)
+    dbConn.query(`select pid,name as pname from product`,function(error,results)
     {
         return res.send({error:false,data:results,message:"success"});
     });
@@ -101,7 +101,7 @@ app.get("/getpid",function(req,res)
 
 app.get("/getvid",function(req,res)
 {
-    dbConn.query(`select vid,name as vname from vendor`,function(req,res)
+    dbConn.query(`select vid,name as vname from vendor`,function(error,results)
     {
         return res.send({error:false,data:results,message:"success"});
     });
@@ -230,6 +230,54 @@ app.post("/addProduct",function(req,res)
 
 });
 
+//employee from here 
+app.post("/addEmployee",function(req,res)
+{
+    let name = req.body.name;
+    let phone = req.body.contact;
+    let address = req.body.address;
+    let role = req.body.role;
+    dbConn.query(`INSERT INTO employee(name, contact, address, role) VALUES ('${name}','${phone}','${address}','${role}')`,function(error,results)
+    {
+        if(error)
+        {
+            return res.send({error:true,data:results,message:error});
+        }
+        return res.send({error:false,data:results,message:"success"});
+    });
+
+});
+app.post("/deleteEmployee",function(req,res)
+{
+    let wid = req.body.wid;
+    //console.log(vid);
+    dbConn.query(`delete from employee where wid='${wid}'`,function(error,results)
+    {
+        if(error)
+        {
+            return res.send({error:true,data:results,message:error});
+        }
+        return res.send({error:false,data:results,message:"success"});
+    });
+});
+app.post("/editEmployee",function(req,res)
+{
+    //console.log(req);
+    let contact = req.body.contact;
+    let name = req.body.name;
+    let address = req.body.address;
+    let role = req.body.role;
+    let wid = req.body.wid;
+    dbConn.query(`UPDATE employee SET name='${name}',contact='${contact}',address='${address}',role='${role}' WHERE wid='${wid}'`, function (error, results, fields)
+        {
+            if(error)
+            {
+                return res.send({error:true,data:results,message:error});
+            }
+            return res.send({error:false,data:results,message:"success"});
+        });
+});
+//till here
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);
   });
