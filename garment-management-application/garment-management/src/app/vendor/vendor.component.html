@@ -1,0 +1,24 @@
+<app-navbar></app-navbar><br><br>
+<div class="container"><br>
+    <div *ngIf="errorTrue" class="alert alert-danger">{{errorMsg}}</div>
+    <div style="float:right"><button routerLink="/addVendor" class="btn btn-primary"><i class="uil uil-plus"></i>Add vendor</button></div><br>
+    <br>
+    <table class="table table-striped">
+        <thead>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Address</th>
+            <th>Update</th>
+            <th>Delete</th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let vd of vendorData">
+                <td>{{vd.name}}</td>
+                <td>{{vd.phone}}</td>
+                <td>{{vd.address}}</td>
+                <td><a><i class="uil uil-pen" (click)="editData(vd)"></i></a></td>
+                <td><a><i class="uil uil-trash" (click)="deleteVendor(vd.vid)"></i></a></td>
+            </tr>
+        </tbody>
+    </table>
+</div><br>
