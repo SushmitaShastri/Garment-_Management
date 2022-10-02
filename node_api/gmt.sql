@@ -180,10 +180,6 @@ CREATE TABLE `vendor` (
 -- Dumping data for table `vendor`
 --
 
-INSERT INTO `vendor` (`vid`, `admin_id`, `name`, `phone`, `address`) VALUES
-(4, 0, 'Raju anna', '8908908900', 'Ichalakaranji'),
-(5, 0, 'test', '123', 'dsfds');
-
 --
 -- Indexes for dumped tables
 --
