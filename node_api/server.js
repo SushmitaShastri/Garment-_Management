@@ -194,6 +194,8 @@ app.post("/addVendor",function(req,res)
 
 });
 
+
+
 app.post("/editOrder",function(req,res)
 {
     let pid = req.body.pname;
@@ -215,13 +217,13 @@ app.post("/editOrder",function(req,res)
 
 app.post("/addOrder",function(req,res)
 {
-    let pid = req.body.pname;
-    let vid = req.body.vname;
+    let pid = req.body.productName;
+    let vid = req.body.vendorName;
     let date = req.body.date;
-    let quantity = req.body.qty;
+    let quantity = req.body.quantity;
     let damage = req.body.damage;
-    let cid = req.body.cname;
-    dbConn.query(`INSERT INTO order_request(pid, vid, date, quantity, damage, cid) VALUES ('${pid}','${vid}','${date}','${quantity}','${damage}','${cid}'))`,function(error,results)
+    let cid = req.body.catalogName;
+    dbConn.query(`INSERT INTO order_request(pid, vid, date, quantity, damage, cid) VALUES ('${pid}','${vid}','${date}','${quantity}','${damage}','${cid}')`,function(error,results)
     {
         if(error)
         {
