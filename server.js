@@ -125,6 +125,23 @@ app.post("/editVendor",function(req,res)
         });
 });
 
+app.post("/editEmployee",function(req,res)
+{
+    //console.log(req);
+    let contact = req.body.contact;
+    let name = req.body.name;
+    let address = req.body.address;
+    let role = req.body.role;
+    let wid = req.body.eid;
+    dbConn.query(`UPDATE employee SET name='${name}',contact='${contact}',address='${address}',role='${role}' WHERE wid='${wid}'`, function (error, results, fields)
+        {
+            if(error)
+            {
+                return res.send({error:true,data:results,message:error});
+            }
+            return res.send({error:false,data:results,message:"success"});
+        });
+});
 app.post("/editRawMaterial",function(req,res)
 {
     //console.log(req);
