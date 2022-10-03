@@ -1,0 +1,38 @@
+<app-navbar></app-navbar><br>
+<div>
+    <div class="container col-sm-6 m-auto">
+        <h3>Add Employee</h3><hr>
+        <form [formGroup]="addEmployeeGroup" (submit)="addEmployee()">
+            <label>Name:</label><br>
+              <div class="input-group">
+                <input formControlName="name" required [class.is-invalid]="f['name'].invalid && (f['name'].dirty || f['name'].touched)" class="form-control" placeholder="enter your name" type="name" class="form-control" id="name" aria-describedby="usernameHelp">
+              </div>
+              <div *ngIf="f['name'].invalid && f['name'].touched">
+                <small class="text-danger" *ngIf="f['name'].errors?.['required']">Please enter the name!</small>
+              </div><br>
+              <label>Contact:</label><br>
+              <div class="input-group">
+                <input formControlName="contact" required [class.is-invalid]="f['contact'].invalid && (f['contact'].dirty || f['contact'].touched)" class="form-control" placeholder="enter your contact" type="number" class="form-control" id="name" aria-describedby="usernameHelp">
+              </div>
+              <div *ngIf="f['contact'].invalid && f['contact'].touched">
+                <small class="text-danger" *ngIf="f['contact'].errors?.['required']">Please enter the contact!</small>
+              </div><br>
+              <label>Address:</label><br>
+              <div class="input-group">
+                <textarea formControlName="address" id="address" required  [class.is-invalid]="f['address'].invalid && (f['address'].dirty || f['address'].touched)" class="form-control"></textarea>
+              </div>
+              <div *ngIf="f['address'].invalid && f['address'].touched">
+                <small class="text-danger" *ngIf="f['address'].errors?.['required']">Please enter the address!</small>
+              </div><br>
+              <label>Role:</label><br>
+              <div class="input-group">
+                <input formControlName="role" required [class.is-invalid]="f['role'].invalid && (f['role'].dirty || f['role'].touched)" class="form-control" placeholder="enter your role" type="text" class="form-control" id="name" aria-describedby="usernameHelp">
+              </div>
+              <div *ngIf="f['role'].invalid && f['role'].touched">
+                <small class="text-danger" *ngIf="f['role'].errors?.['required']">Please enter the role!</small>
+              </div><br>
+              <input type="submit" class="btn btn-info" value="Submit">
+
+        </form>
+    </div>
+</div>

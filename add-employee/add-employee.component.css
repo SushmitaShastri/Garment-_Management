@@ -1,0 +1,6 @@
+.container
+{
+    border:solid 1px grey;
+    box-shadow: 2px 3px 3px grey;
+    padding:15px;
+}
