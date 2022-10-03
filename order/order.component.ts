@@ -16,8 +16,9 @@ export class OrderComponent implements OnInit {
 
   ngOnInit(): void {
     this._service.orderList().subscribe((data:any)=>{
-      console.log("data "+JSON.stringify(data["data"]));
+     // console.log("data "+JSON.stringify(data["data"]));
       this.orderData = data["data"];
+      //console.log(this.orderData)
     });
   }
   editOrder(odata: any)

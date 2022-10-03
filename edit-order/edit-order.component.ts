@@ -28,6 +28,7 @@ export class EditOrderComponent implements OnInit {
     this.editOrderGroup.get('qty').setValue(this.odata.quantity);
     this.editOrderGroup.get('damage').setValue(this.odata.damage);
     this.editOrderGroup.get('cname').setValue(this.odata.cname);
+    
     this._service.getcid().subscribe(
       (data)=>{
         console.log(data);
@@ -69,7 +70,7 @@ export class EditOrderComponent implements OnInit {
         const orderFormData = this.editOrderGroup.value;
         orderFormData.oid = this.odata.oid;
         console.log(orderFormData);
-        this._service.updateOrder(orderFormData).subscribe(
+        this._service.editOrder(orderFormData).subscribe(
           (data)=>
           {
             console.log(data);
