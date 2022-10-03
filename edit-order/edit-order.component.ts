@@ -28,20 +28,19 @@ export class EditOrderComponent implements OnInit {
     this.editOrderGroup.get('qty').setValue(this.odata.quantity);
     this.editOrderGroup.get('damage').setValue(this.odata.damage);
     this.editOrderGroup.get('cname').setValue(this.odata.cname);
-    
-    this._service.getcid().subscribe(
-      (data)=>{
+    this._service.getCategoryData().subscribe(
+      (data:any)=>{
         console.log(data);
         this.cdata=data["data"];
       }
     );
-    this._service.getvid().subscribe(
-      (data)=>{
+    this._service.getVendorData().subscribe(
+      (data:any)=>{
         console.log(data);
         this.vdata=data["data"];
       });
-     this._service.getpid().subscribe(
-        (data)=>{
+     this._service.getProductData().subscribe(
+        (data:any)=>{
           console.log(data);
           this.pdata=data["data"];
         });
@@ -69,6 +68,9 @@ export class EditOrderComponent implements OnInit {
     {
         const orderFormData = this.editOrderGroup.value;
         orderFormData.oid = this.odata.oid;
+        orderFormData.pid = this.odata.pid;
+        orderFormData.cid = this.odata.cid;
+        orderFormData.vid = this.odata.vid;
         console.log(orderFormData);
         this._service.editOrder(orderFormData).subscribe(
           (data)=>
