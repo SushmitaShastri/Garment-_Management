@@ -214,6 +214,23 @@ app.post("/addVendor",function(req,res)
 
 });
 
+app.post("/addEmployee",function(req,res)
+{
+    let name = req.body.name;
+    let phone = req.body.contact;
+    let address = req.body.address;
+    let role = req.body.role;
+    dbConn.query(`INSERT INTO employee(name, contact, address, role) VALUES ('${name}','${phone}','${address}','${role}')`,function(error,results)
+    {
+        if(error)
+        {
+            return res.send({error:true,data:results,message:error});
+        }
+        return res.send({error:false,data:results,message:"success"});
+    });
+
+});
+
 app.post("/addDistribute",function(req,res)
 {
     let date = req.body.date;
