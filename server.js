@@ -23,7 +23,7 @@ var dbConn = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: '',
-    database: 'gmt'
+    database: 'garment_management'
 });
   
 // connect to database
@@ -72,49 +72,33 @@ app.get("/vendorList",function(req,res)
         });
 });
 
-app.get("/orderList",function(req,res)
+app.get("/listDistribute",function(req,res)
 {
-    dbConn.query(`select o.date,o.quantity,o.damage,p.name as pname,v.name vname,c.name as cname
-    from order_request o,catalog c,product p,vendor v
-    where o.pid=p.pid and o.vid=v.vid and c.id=o.cid`, function (error, results, fields)
+    dbConn.query(`select * from assigned_to`, function (error, results, fields)
         {
             //console.log(results);
             return res.send({error:false,data:results,message:"success"});
         });
 });
 
-app.get("/getcid",function(req,res)
+app.get("/catalogList",function(req,res)
 {
-    dbConn.query(`select id as cid,name from catalog`,function(error,results)
-    {
-        return res.send({error:false,data:results,message:"success"});
-    });
-});
-
-app.get("/getpid",function(req,res)
-{
-    dbConn.query(`select pid,name as pname from product`,function(error,results)
-    {
-        return res.send({error:false,data:results,message:"success"});
-    });
-});
-
-app.get("/getvid",function(req,res)
-{
-    dbConn.query(`select vid,name as vname from vendor`,function(error,results)
-    {
-        return res.send({error:false,data:results,message:"success"});
-    });
-});
-
-app.get("/productList",function(req,res)
-{
-    dbConn.query(`select * from product`, function (error, results, fields)
+    dbConn.query(`select * from catalog`, function (error, results, fields)
         {
             //console.log(results);
             return res.send({error:false,data:results,message:"success"});
         });
 });
+
+app.get("/ListRawMaterial",function(req,res)
+{
+    dbConn.query(`select * from raw_material`, function (error, results, fields)
+        {
+            //console.log(results);
+            return res.send({error:false,data:results,message:"success"});
+        });
+});
+
 
 app.post("/editVendor",function(req,res)
 {
@@ -133,14 +117,16 @@ app.post("/editVendor",function(req,res)
         });
 });
 
-app.post("/editProduct",function(req,res)
+app.post("/editRawMaterial",function(req,res)
 {
     //console.log(req);
-    let pid = req.body.pid;
+    let rid = req.body.rid;
     let name = req.body.name;
-    let description = req.body.description;
+    let type = req.body.rtype;
     let size = req.body.size;
-    dbConn.query(`update product set name='${name}',description='${description}',size='${size}' where pid=${pid}`, function (error, results, fields)
+    let quantity = req.body.quantity;
+    let available = req.body.available;
+    dbConn.query(`update raw_material set name='${name}',type='${type}',size='${size}',quantity='${quantity}',available='${available}' where rid='${rid}';`, function (error, results, fields)
         {
             if(error)
             {
@@ -149,6 +135,25 @@ app.post("/editProduct",function(req,res)
             return res.send({error:false,data:results,message:"success"});
         });
 });
+
+app.post("/editDistribute",function(req,res)
+{
+    //console.log(req);
+    let date = req.body.date;
+    let status = req.body.status;
+    let quantity = req.body.quantity;
+    let damage = req.body.damage;
+    let assignedid =req.body.assignid;
+    dbConn.query(`update assigned_to set date='${date}',status='${status}',quantity='${quantity}',damage='${damage}' where assignid='${assignedid}';`, function (error, results, fields)
+        {
+            if(error)
+            {
+                return res.send({error:true,data:results,message:error});
+            }
+            return res.send({error:false,data:results,message:"success"});
+        });
+});
+
 
 app.post("/deleteVendor",function(req,res)
 {
@@ -164,11 +169,11 @@ app.post("/deleteVendor",function(req,res)
     });
 });
 
-app.post("/deleteProduct",function(req,res)
+app.post("/deleteDistribute",function(req,res)
 {
-    let pid = req.body.pid;
+    let did = req.body.assignid;
     //console.log(vid);
-    dbConn.query(`delete from product where pid="${pid}"`,function(error,results)
+    dbConn.query(`delete from assigned_to where assignid="${did}"`,function(error,results)
     {
         if(error)
         {
@@ -177,6 +182,21 @@ app.post("/deleteProduct",function(req,res)
         return res.send({error:false,data:results,message:"success"});
     });
 });
+
+app.post("/deleteRawMaterial",function(req,res)
+{
+    let rid = req.body.rid;
+    //console.log(vid);
+    dbConn.query(`delete from raw_material where rid="${rid}"`,function(error,results)
+    {
+        if(error)
+        {
+            return res.send({error:true,data:results,message:error});
+        }
+        return res.send({error:false,data:results,message:"success"});
+    });
+});
+
 
 app.post("/addVendor",function(req,res)
 {
@@ -194,15 +214,13 @@ app.post("/addVendor",function(req,res)
 
 });
 
-app.post("/editOrder",function(req,res)
+app.post("/addDistribute",function(req,res)
 {
-    let pid = req.body.pname;
-    let vid = req.body.vname;
     let date = req.body.date;
-    let quantity = req.body.qty;
+    let status = req.body.status;
+    let quantity = req.body.quantity;
     let damage = req.body.damage;
-    let cid = req.body.cname;
-    dbConn.query(`UPDATE order_request SET pid='${pid}',vid='${vid}',date='${date}',quantity='${quantity}',damage='${damage}',cid='${cid}',oid='${oid}' WHERE  oid='')`,function(error,results)
+    dbConn.query(`insert into assigned_to (date,status,quantity,damage) values('${date}','${status}','${quantity}','${damage}')`,function(error,results)
     {
         if(error)
         {
@@ -213,15 +231,13 @@ app.post("/editOrder",function(req,res)
 
 });
 
-app.post("/addOrder",function(req,res)
+app.post("/addCatalog",function(req,res)
 {
-    let pid = req.body.pname;
-    let vid = req.body.vname;
-    let date = req.body.date;
-    let quantity = req.body.qty;
-    let damage = req.body.damage;
-    let cid = req.body.cname;
-    dbConn.query(`INSERT INTO order_request(pid, vid, date, quantity, damage, cid) VALUES ('${pid}','${vid}','${date}','${quantity}','${damage}','${cid}')`,function(error,results)
+    let catalogname = req.body.catalogname;
+    let catalogtype = req.body.catalogtype;
+    let catalogsize = req.body.catalogsize;
+    let uploadfile = req.body.uploadfile;
+    dbConn.query(`insert into catalog (name,type,size,imgurl) values('${catalogname}','${catalogtype}','${catalogsize}','${uploadfile}')`,function(error,results)
     {
         if(error)
         {
@@ -232,12 +248,14 @@ app.post("/addOrder",function(req,res)
 
 });
 
-app.post("/addProduct",function(req,res)
+app.post("/addRawMaterial",function(req,res)
 {
+    let type = req.body.type;
     let name = req.body.name;
-    let description = req.body.description;
+    let quantity = req.body.quantity;
     let size = req.body.size;
-    dbConn.query(`insert into product (name,description,size) values('${name}','${description}','${size}')`,function(error,results)
+    let available = req.body.available;
+    dbConn.query(`insert into raw_material (type,name,size,quantity,available) values('${type}','${name}','${size}','${quantity}','${available}')`,function(error,results)
     {
         if(error)
         {
@@ -248,63 +266,6 @@ app.post("/addProduct",function(req,res)
 
 });
 
-//employee from here 
-app.get("/employeeList",function(req,res)
-{
-    dbConn.query(`select * from employee`, function (error, results, fields)
-        {
-            //console.log(results);
-            return res.send({error:false,data:results,message:"success"});
-        });
-});
-
-app.post("/addEmployee",function(req,res)
-{
-    let name = req.body.name;
-    let phone = req.body.contact;
-    let address = req.body.address;
-    let role = req.body.role;
-    dbConn.query(`INSERT INTO employee(name, contact, address, role) VALUES ('${name}','${phone}','${address}','${role}')`,function(error,results)
-    {
-        if(error)
-        {
-            return res.send({error:true,data:results,message:error});
-        }
-        return res.send({error:false,data:results,message:"success"});
-    });
-
-});
-app.post("/deleteEmployee",function(req,res)
-{
-    let wid = req.body.eid;
-    //console.log(vid);
-    dbConn.query(`delete from employee where wid='${wid}'`,function(error,results)
-    {
-        if(error)
-        {
-            return res.send({error:true,data:results,message:error});
-        }
-        return res.send({error:false,data:results,message:"success"});
-    });
-});
-app.post("/editEmployee",function(req,res)
-{
-    //console.log(req);
-    let contact = req.body.contact;
-    let name = req.body.name;
-    let address = req.body.address;
-    let role = req.body.role;
-    let wid = req.body.eid;
-    dbConn.query(`UPDATE employee SET name='${name}',contact='${contact}',address='${address}',role='${role}' WHERE wid='${wid}'`, function (error, results, fields)
-        {
-            if(error)
-            {
-                return res.send({error:true,data:results,message:error});
-            }
-            return res.send({error:false,data:results,message:"success"});
-        });
-});
-//till here
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);
   });
