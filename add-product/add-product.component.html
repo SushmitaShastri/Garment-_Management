@@ -1,0 +1,30 @@
+<app-navbar></app-navbar><br>
+<div>
+    <div class="container col-sm-6 m-auto">
+        <h3>Add product</h3><hr>
+        <form [formGroup]="addProductGroup" (submit)="addProduct()">
+            <label>Product name:</label><br>
+              <div class="input-group">
+                <input formControlName="name" required [class.is-invalid]="f['name'].invalid && (f['name'].dirty || f['name'].touched)" class="form-control" placeholder="enter your name" type="name" class="form-control" id="name" aria-describedby="usernameHelp">
+              </div>
+              <div *ngIf="f['name'].invalid && f['name'].touched">
+                <small class="text-danger" *ngIf="f['name'].errors?.['required']">Please enter the name!</small>
+              </div><br>
+              <label>Description:</label><br>
+              <div class="input-group">
+                <textarea formControlName="description" id="description" required  [class.is-invalid]="f['description'].invalid && (f['description'].dirty || f['description'].touched)" class="form-control"></textarea>
+              </div>
+              <div *ngIf="f['description'].invalid && f['description'].touched">
+                <small class="text-danger" *ngIf="f['description'].errors?.['required']">Please enter the description!</small>
+              </div><br>
+              <label>Size:</label><br>
+              <div class="input-group">
+                <input formControlName="size" required [class.is-invalid]="f['size'].invalid && (f['size'].dirty || f['size'].touched)" class="form-control" placeholder="enter size" class="form-control" id="size" aria-describedby="usernameHelp">
+              </div>
+              <div *ngIf="f['size'].invalid && f['size'].touched">
+                <small class="text-danger" *ngIf="f['size'].errors?.['required']">Please enter the size!</small>
+              </div><br>
+                <input type="submit" class="btn btn-info" value="Submit">
+        </form>
+    </div>
+</div>
