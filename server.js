@@ -71,6 +71,14 @@ app.get("/vendorList",function(req,res)
             return res.send({error:false,data:results,message:"success"});
         });
 });
+app.get("/employeeList",function(req,res)
+{
+    dbConn.query(`select * from employee`, function (error, results, fields)
+        {
+            //console.log(results);
+            return res.send({error:false,data:results,message:"success"});
+        });
+});
 
 app.get("/listDistribute",function(req,res)
 {
@@ -160,6 +168,20 @@ app.post("/deleteVendor",function(req,res)
     let vid = req.body.vid;
     //console.log(vid);
     dbConn.query(`delete from vendor where vid="${vid}"`,function(error,results)
+    {
+        if(error)
+        {
+            return res.send({error:true,data:results,message:error});
+        }
+        return res.send({error:false,data:results,message:"success"});
+    });
+});
+
+app.post("/deleteEmployee",function(req,res)
+{
+    let wid = req.body.eid;
+    //console.log(vid);
+    dbConn.query(`delete from employee where wid='${wid}'`,function(error,results)
     {
         if(error)
         {
