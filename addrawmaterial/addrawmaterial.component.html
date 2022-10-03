@@ -1,0 +1,44 @@
+<app-navbar></app-navbar><br>
+<div>
+    <div class="container col-sm-6 m-auto">
+        <h3>Add Raw Material</h3><hr>
+        <form [formGroup]="addRawMaterialWork" (submit)="addRawMaterial()">
+            <label>Type:</label><br>
+              <div class="input-group">
+                <input formControlName="type" required [class.is-invalid]="f['type'].invalid && (f['type'].dirty || f['type'].touched)" class="form-control" placeholder="enter type" type="text" class="form-control" id="type" aria-describedby="usernameHelp">
+              </div>
+              <div *ngIf="f['type'].invalid && f['type'].touched">
+                <small class="text-danger" *ngIf="f['type'].errors?.['required']">Please enter type!</small>
+              </div><br>
+              <label>Name:</label><br>
+              <div class="input-group">
+                <input formControlName="name" required  [class.is-invalid]="f['name'].invalid && (f['name'].dirty || f['name'].touched)" class="form-control" placeholder="enter name" type="text" class="form-control" id="name" aria-describedby="usernameHelp">
+              </div>
+              <div *ngIf="f['name'].invalid && f['name'].touched">
+                <small class="text-danger" *ngIf="f['name'].errors?.['required']">Please enter Name!</small>
+              </div><br>
+              <label>Size:</label><br>
+              <div class="input-group">
+                <input formControlName="size" id="size" required  [class.is-invalid]="f['size'].invalid && (f['size'].dirty || f['size'].touched)" class="form-control" placeholder="enter size"  type="number">
+              </div>
+              <div *ngIf="f['size'].invalid && f['size'].touched">
+                <small class="text-danger" *ngIf="f['size'].errors?.['required']">Please enter the size!</small>
+              </div><br>
+              <label>Quantity:</label><br>
+              <div class="input-group">
+                <input formControlName="quantity" id="quantity" required  [class.is-invalid]="f['quantity'].invalid && (f['quantity'].dirty || f['quantity'].touched)" class="form-control" type="number" placeholder="enter quantity" >
+              </div>
+              <div *ngIf="f['quantity'].invalid && f['quantity'].touched">
+                <small class="text-danger" *ngIf="f['quantity'].errors?.['required']">Please enter the quantity!</small>
+              </div><br>
+              <label>Available:</label><br>
+              <div class="input-group">
+                <input formControlName="available" id="available" required  [class.is-invalid]="f['available'].invalid && (f['available'].dirty || f['available'].touched)" class="form-control" type="number" placeholder="enter available" >
+              </div>
+              <div *ngIf="f['available'].invalid && f['available'].touched">
+                <small class="text-danger" *ngIf="f['available'].errors?.['required']">Please enter the available!</small>
+              </div><br>
+                <input type="submit" class="btn btn-info" value="Submit">
+        </form>
+    </div>
+</div>

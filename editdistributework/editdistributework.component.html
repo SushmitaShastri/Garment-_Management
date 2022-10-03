@@ -1,0 +1,37 @@
+<app-navbar></app-navbar><br>
+<div>
+    <div class="container col-sm-6 m-auto">
+        <h3>Edit Distribute Work</h3><hr>
+        <form [formGroup]="editDistributeGroup" (submit)="updateDistribute()">
+          <label>Date:</label><br>
+          <div class="input-group">
+            <input formControlName="date" required [class.is-invalid]="f['date'].invalid && (f['date'].dirty || f['date'].touched)" class="form-control" placeholder="enter date" type="date" class="form-control" id="date" aria-describedby="usernameHelp">
+          </div>
+          <div *ngIf="f['date'].invalid && f['date'].touched">
+            <small class="text-danger" *ngIf="f['date'].errors?.['required']">Please enter Date!</small>
+          </div><br>
+          <label>Status:</label><br>
+          <div class="input-group">
+            <input formControlName="status" required  [class.is-invalid]="f['status'].invalid && (f['status'].dirty || f['status'].touched)" class="form-control" placeholder="enter status" type="text" class="form-control" id="status" aria-describedby="usernameHelp">
+          </div>
+          <div *ngIf="f['status'].invalid && f['status'].touched">
+            <small class="text-danger" *ngIf="f['status'].errors?.['required']">Please enter status!</small>
+          </div><br>
+          <label>Quantity:</label><br>
+          <div class="input-group">
+            <input formControlName="quantity" id="quantity" required  [class.is-invalid]="f['quantity'].invalid && (f['quantity'].dirty || f['quantity'].touched)" class="form-control" placeholder="enter quantity"  type="number">
+          </div>
+          <div *ngIf="f['quantity'].invalid && f['quantity'].touched">
+            <small class="text-danger" *ngIf="f['quantity'].errors?.['required']">Please enter the quantity!</small>
+          </div><br>
+          <label>Damage:</label><br>
+          <div class="input-group">
+            <input formControlName="damage" id="damage" required  [class.is-invalid]="f['damage'].invalid && (f['damage'].dirty || f['damage'].touched)" class="form-control" type="number" placeholder="enter damage" >
+          </div>
+          <div *ngIf="f['damage'].invalid && f['damage'].touched">
+            <small class="text-danger" *ngIf="f['damage'].errors?.['required']">Please enter the damage!</small>
+          </div><br>
+                <input type="submit" class="btn btn-info" value="Submit" (click)="updateDistribute()">
+        </form>
+    </div>
+</div>

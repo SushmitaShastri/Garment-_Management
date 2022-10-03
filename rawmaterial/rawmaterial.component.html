@@ -1,0 +1,28 @@
+<app-navbar></app-navbar>
+<div class="container"><br>
+    <div *ngIf="errorTrue" class="alert alert-danger">{{errorMsg}}</div>
+    <div style="float:right"><button routerLink="/addRawMaterial" class="btn btn-primary"><i class="uil uil-plus"></i> Add Raw Material</button></div><br>
+    <br>
+    <table class="table table-striped">
+        <thead>
+            <th>Type</th>
+            <th>Name</th>
+            <th>Size</th>
+            <th>Quantity</th>
+            <th>Available</th>
+            <th>Update</th>
+            <th>Delete</th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let rd of rawMaterialData">
+                <td>{{rd.type}}</td>
+                <td>{{rd.name}}</td>
+                <td>{{rd.size}}</td>
+                <td>{{rd.quantity}}</td>
+                <td>{{rd.available}}</td>
+                <td><a><i class="uil uil-pen" (click)="editData(rd)"></i></a></td>
+                <td><a><i class="uil uil-trash" (click)="deleterawmaterial(rd.rid)"></i></a></td>
+            </tr>
+        </tbody>
+    </table>
+</div><br>
