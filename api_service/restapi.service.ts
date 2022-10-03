@@ -24,6 +24,7 @@ export class RestapiService {
   editRawMaterialUrl = "http://localhost:3000/editRawMaterial";
   deleteRawMaterialUrl = "http://localhost:3000/deleteRawMaterial";
   addRawMaterialUrl = "http://localhost:3000/addRawMaterial";
+  addOrderUrl="http://localhost:3000/addOrder";
   vendorData: any;
   distributeData:any;
   rawMaterialData :any;
@@ -92,6 +93,10 @@ export class RestapiService {
   addRawMaterial(addRawMaterialData:any)
   {
     return this.http.post<any>(this.addRawMaterialUrl,addRawMaterialData);
+  }
+  addorder(orderData:any)
+  {
+    return this.http.post<any>(this.addOrderUrl,orderData);
   }
   distributeList()
   {
