@@ -71,10 +71,10 @@ app.get("/vendorList",function(req,res)
             return res.send({error:false,data:results,message:"success"});
         });
 });
-
+//updated sushmita,oct 3, 6:44pm
 app.get("/orderList",function(req,res)
 {
-    dbConn.query(`select o.date,o.quantity,o.damage,p.name as pname,v.name vname,c.name as cname
+    dbConn.query(`select o.vid,o.cid,o.pid,o.oid,o.date,o.quantity,o.damage,p.name as pname,v.name vname,c.name as cname
     from order_request o,catalog c,product p,vendor v
     where o.pid=p.pid and o.vid=v.vid and c.id=o.cid`, function (error, results, fields)
         {
@@ -195,16 +195,19 @@ app.post("/addVendor",function(req,res)
 });
 
 
-
+//updated,sushmita 18:45 oct 3
 app.post("/editOrder",function(req,res)
 {
-    let pid = req.body.pname;
-    let vid = req.body.vname;
+    let pid = req.body.pid;
+    let vid = req.body.vid;
     let date = req.body.date;
     let quantity = req.body.qty;
     let damage = req.body.damage;
-    let cid = req.body.cname;
-    dbConn.query(`UPDATE order_request SET pid='${pid}',vid='${vid}',date='${date}',quantity='${quantity}',damage='${damage}',cid='${cid}',oid='${oid}' WHERE  oid='')`,function(error,results)
+    let cid = req.body.cid;
+    let oid = req.body.oid;    
+   // console.log(pid+" "+oid);
+
+    dbConn.query(`UPDATE order_request SET pid='${pid}',vid='${vid}',date='${date}',quantity='${quantity}',damage='${damage}',cid='${cid}' WHERE  oid='${oid}'`,function(error,results)
     {
         if(error)
         {
