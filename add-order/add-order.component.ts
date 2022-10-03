@@ -10,42 +10,45 @@ import { RestapiService } from '../api_service/restapi.service';
 })
 export class AddOrderComponent implements OnInit {
   addOrderGroup: any;
-  errorTrue= false;
+  errorTrue=false;
   errorMsg: any;
-  cdata: any;
-  vdata: any;
-  pdata: any;
+  productData: any;
+  vendorData: any;
+  catalogData: any;
 
   constructor(private _service:RestapiService,public form: FormBuilder,private router:Router) { }
   get f() { return this.addOrderGroup.controls; }
+
   ngOnInit(): void {
     this.buildForm();
-    this._service.getcid().subscribe(
-      (data)=>{
+    this._service.getProductData().subscribe(
+      (data:any)=>{
         console.log(data);
-        this.cdata=data["data"];
+        this.productData = data["data"];
       }
     );
-    this._service.getvid().subscribe(
-      (data)=>{
+    this._service.getVendorData().subscribe(
+      (data:any)=>{
         console.log(data);
-        this.vdata=data["data"];
-      });
-     this._service.getpid().subscribe(
-        (data)=>{
-          console.log(data);
-          this.pdata=data["data"];
-        });
+        this.vendorData = data["data"];
+      }
+    );
+    this._service.getCategoryData().subscribe(
+      (data:any)=>{
+        console.log(data);
+        this.catalogData = data["data"];
+      }
+    );
   }
   buildForm()
   {
     this.addOrderGroup = this.form.group({
-      pname: ['', [Validators.required]],
-      vname:['',[Validators.required]],
-      date:['',[Validators.required]],
-      qty:['',[Validators.required]],
-      damage:['',[Validators.required]],
-      cname:['',[Validators.required]],
+      productName: ['', [Validators.required]],
+      vendorName: ['', [Validators.required]],
+      catalogName: ['', [Validators.required]],
+      date: ['', [Validators.required]],
+      quantity: ['', [Validators.required]],
+      damage: ['', [Validators.required]],
     });
   }
   addOrder()
@@ -60,7 +63,7 @@ export class AddOrderComponent implements OnInit {
     {
         const orderFormData = this.addOrderGroup.value;
         console.log(orderFormData);
-        this._service.addOrder(orderFormData).subscribe(
+        this._service.addorder(orderFormData).subscribe(
           (data)=>
           {
             console.log(data);
